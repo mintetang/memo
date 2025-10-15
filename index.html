@@ -15,22 +15,26 @@
 <body>
     <div class="container">
         <div id="formSection">
-            <div id="formTitle">
-            <!--<h2>出席記錄</h2>-->
-            <button id="addClassButton" 
-                onclick="showAddClassForm()">
-                1 加入新紀錄日期
+            <h2>Memo Anytime</h2>
+            <button id="newMemo" 
+                onclick="clearAbc()">
+                New Memo
             </button>
-            <button id="readOrgButton" 
-                onclick="showreadOrgForm()">
-                2 使用上次會友名單
+           <label for="inputA">keyA: </label>
+            <input type="text" id="inputA" required
+                size="10" >
+            <label for="inputB">keyB: </label>
+            <input type="text" id="inputB" required
+                size="20" >
+            <label for="inputC">keyC: </label>
+            <input type="text" id="inputC" required
+                size="40"  >
+            <button onclick="pushAB()">
+            確認
             </button>
-            
-            <button id="addStudentOrgButton" 
-                onclick="showAddStudentOrgForm()">
-                2A 匯入初始名單
+            <button onclick="alert('please check all input again!')">
+            取消
             </button>
-            
             <label for="classSelector">日期和堂次記錄:</label>
             <select id="classSelector" required 
                 onchange="showStudentsList()">
