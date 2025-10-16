@@ -29,25 +29,25 @@
             <label for="inputC">keyC: </label>
             <input type="text" id="inputC" required
                 size="40"  >
-            <button onclick="pushAB()">
+            <button onclick="pushAb()">
             確認
             </button>
             <button onclick="alert('please check all input again!')">
             取消
             </button>
-            <label for="classSelector">日期和堂次記錄:</label>
-            <select id="classSelector" required 
+            <label for="aSelector">Main Category:</label>
+            <select id="aSelector" required 
                 onchange="showStudentsList()">
             </select>
             
-            <label for="rollno">搜尋編號: </label>
-            <input type="text" id="rollno" required
-                size="10" onchange="searchRoll()">
+            <label for="kword">Search keyword: </label>
+            <input type="text" id="kword" required
+                size="10" onchange="searchKey()">
 
             </div>
        
             <div id="resultSection">
-                <h3>統計結果</h3>
+                <h3>Listing</h3>
                 <p>
                     執行日期時間: 
                     <span id="attendanceDate"></span>
@@ -56,26 +56,6 @@
                 <p>
                     紀錄日期堂次: 
                     <span id="attendanceClass"></span>
-                </p>
-                <p>
-                    全部紀錄人數: 
-                    <span id="attendanceTotalStudents"></span>
-                </p>
-                <p>
-                    出席人數: 
-                    <span id="attendancePresent"></span>
-                </p>
-                <p>
-                    缺席人數: 
-                    <span id="attendanceAbsent"></span>
-                </p>
-                <p>
-                    請假人數: 
-                    <span id="attendanceLeave"></span>
-                </p>
-                <p>
-                    出席率: 
-                    <span id="attendanceRate"></span>
                 </p>
         </div>
     </div>
