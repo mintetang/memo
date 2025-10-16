@@ -37,9 +37,9 @@ console.log(inputA,inputB,inputC);
     console.log(memoArray);
 
     groupB = collectB(memoArray);
-    groupA = collectA(memoArray);
+    //groupA = collectA(memoArray);
     console.log(groupB);
-    console.log(groupA);
+    //console.log(groupA);
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
@@ -50,19 +50,32 @@ console.log(inputA,inputB,inputC);
 function collectB (array) {
 
     const groupB = {};
-
+    groupA = {};
+    console.log(groupA);
     array.forEach(obj => {
     const key = obj.classB;
     const value = obj.valC;
+    const akey = obj.classA;
 
-    if (groupB[key]) {
+    if (groupB[key] && groupA !== {}) {
         // Key exists, push the value to the existing array
         groupB[key].push(value);
+        groupA={[akey]:groupB};
+        console.log(groupA);
     } else {
         // Key does not exist, create a new array with the value
         groupB[key] = [value];
+        groupA={[akey]:groupB};
+        console.log(groupA);
     }
     });
+
+    /*const arrayB = Object.keys(groupB).map(key => {
+    return {
+        [key]: groupB[key]
+    };
+    });
+    console.log(arrayB);*/
 
     return groupB;
   //return Object.keys(obj).filter(key => obj[key] === value);
