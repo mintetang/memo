@@ -1,3 +1,39 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 50px;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 label {
-    display:block;
+    padding: 10px;
+    display: block;
+}
+label[for="inputC" ]
+{
+    color:brown;
+}
+input {
+    padding: 10px;
+}
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 15px;
+    cursor: pointer;
+    margin: 15px 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button#underKey {
+    background-color:brown;
+}
+button#underKey:hover {
+    background-color:#55db34;
 }
