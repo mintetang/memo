@@ -1,3 +1,4 @@
+
 function pushAb() {
     const inputA = document.
         getElementById('inputA').value;
@@ -35,29 +36,55 @@ console.log(inputA,inputB,inputC);
     //save attendance history to localStorage attHis
     console.log(memoArray);
 
-    console.log(collect(memoArray,inputB,inputC));
+    groupB = collectB(memoArray);
+    groupA = collectA(memoArray);
+    console.log(groupB);
+    console.log(groupA);
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
+    /*localStorage.setItem('memoArr', 
+          JSON.stringify(memoArray));*/
 }
 
-function collect (array) {
+function collectB (array) {
 
-    const groupedByCategory = {};
+    const groupB = {};
 
     array.forEach(obj => {
     const key = obj.classB;
     const value = obj.valC;
 
-    if (groupedByCategory[key]) {
+    if (groupB[key]) {
         // Key exists, push the value to the existing array
-        groupedByCategory[key].push(value);
+        groupB[key].push(value);
     } else {
         // Key does not exist, create a new array with the value
-        groupedByCategory[key] = [value];
+        groupB[key] = [value];
     }
     });
 
-    return console.log(groupedByCategory);
+    return groupB;
+  //return Object.keys(obj).filter(key => obj[key] === value);
+}
+
+function collectA (array) {
+
+    const groupA = {};
+
+    array.forEach(obj => {
+    const key = obj.ClassA;
+    const value = obj.classB;
+
+    if (groupA[key]) {
+        // Key exists, push the value to the existing array
+        groupA[key].push(value);
+    } else {
+        // Key does not exist, create a new array with the value
+        groupA[key] = [value];
+    }
+    });
+
+    return groupA;
   //return Object.keys(obj).filter(key => obj[key] === value);
 }
