@@ -15,21 +15,9 @@ function pushAb() {
     if (memoArray === null) {
     memoArray = [];
     memoArray.push(memoObj);
-    //console.log(attArray);
     } 
-    //else if (JSON.stringify(memoArray).includes(inputB) !== false){
-        // Find object with the same inputB name;
-        //indexToUpdate = memoArray.findIndex((obj) => inputB in obj );
-        //console.log(indexToUpdate);
-        //indexToUpdate = memoArray.findIndex(obj => obj.inputB === memoObj.inputB);
-        //console.log(indexToUpdate);
-        //attArray.splice(indexToUpdate, 1, attObj); 
-        // Remove 1 element at indexToUpdate and insert newObject
-        //console.log(attArray);
-    //}
     else {
     memoArray.push(memoObj);
-    //console.log(attArray);
     }
     memoArray.sort((a, b) => 
         a.classA.localeCompare(b.classA));
@@ -37,7 +25,36 @@ function pushAb() {
     console.log(memoArray);
 
     //group by same key value
-    const groupA = memoArray.reduce((acc, currentItem) => {
+    
+    const cascadingArray = memoArray.reduce((acc, currentItem) => {
+    const { classA, classB, ...rest } = currentItem; // Destructure to get category and other properties
+
+    // Find if the category already exists in the accumulator
+    let existingCategory = acc.find(item => item.classA === classA && item.classB === classB);
+
+    if (!existingCategory) {
+        // If category doesn't exist, create a new entry
+        existingCategory = { classA, classB, items: [] };
+        acc.push(existingCategory);
+    }
+
+    // Add the current item (without the category key) to the items array of the found/new category
+    existingCategory.items.push(rest);
+
+    return acc;
+    }, []);
+
+    console.log(cascadingArray);
+
+    //old spared method
+    //console.log(collect(memoArray));
+
+    localStorage.setItem('memoArr', 
+          JSON.stringify(memoArray));
+}
+
+/*
+const groupA = memoArray.reduce((acc, currentItem) => {
     const classA = currentItem.classA;
     const classB = currentItem.classB;
     if (!acc[classA]) {
@@ -52,15 +69,6 @@ function pushAb() {
     }, {});
 
     console.log(groupA);
-    
-
-    //old spared method
-    //console.log(collect(memoArray));
-
-    localStorage.setItem('memoArr', 
-          JSON.stringify(memoArray));
-}
-
 
 function collect (array) {
 
@@ -81,4 +89,4 @@ function collect (array) {
 
     return group;
   //return Object.keys(obj).filter(key => obj[key] === value);
-}
+}*/
