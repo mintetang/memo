@@ -52,10 +52,12 @@ function pushAb() {
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
+    localStorage.setItem('groupArr', 
+          JSON.stringify(groupArray));
 
      // Update the result section
     document.getElementById('noteData').
-        innerText = JSON.stringify(groupArray);
+        innerText = localStorage.getItem('groupArr');
 }
 
 function showreadForm() {
@@ -127,17 +129,21 @@ function cleanCurrent()
 }
 
 function searchRoll() {
-    const rolltarget = document.getElementById("kword").value;
-    console.log(rolltarget);
+    const kword = document.getElementById("kword").value;
+    console.log(kword);
     // Define your attribute name and value as variables
-    const attributeName = "data-roll-number";
-    let attributeValue = String(rolltarget);
-    // Construct the CSS selector string using template literals
-    const selector = `[${attributeName}="${attributeValue}"]`;
-    // Find the first element matching the selector
-    const targetRoll = document.querySelector(selector);
-    console.log(targetRoll);
-    if (targetRoll) {
-            targetRoll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    let targetElement = null;
+    const allParagraphs = document.querySelectorAll('span');
+    for (const p of allParagraphs) {
+        if (p.textContent.includes(String(kword))) {
+            targetElement = p;
+            break;
         }
     }
+    if (targetElement) {
+    targetElement.scrollIntoView({
+        behavior: "smooth", // Optional: for smooth scrolling animation
+        block: "start"      // Optional: align the top of the element with the top of the viewport
+        });
+    }
+}
