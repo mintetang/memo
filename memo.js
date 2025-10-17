@@ -36,8 +36,9 @@ console.log(inputA,inputB,inputC);
     //save attendance history to localStorage attHis
     console.log(memoArray);
 
-    group = collect(memoArray);
-    console.log(group);
+    groupA = collect(memoArray);
+    console.log(groupA);
+    collB(groupA);
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
@@ -62,4 +63,34 @@ function collect (array) {
 
     return group;
   //return Object.keys(obj).filter(key => obj[key] === value);
+}
+
+function collectB (array) {
+
+    const group = {};
+
+    array.forEach(obj => {
+    const key = obj.classB;
+    const value = obj.valC;
+
+    if (group[key]) {
+        // Key exists, push the value to the existing array
+        group[key].push(value);
+    } else {
+        // Key does not exist, create a new array with the value
+        group[key] = [value];
+    }
+    });
+
+    return group;
+  //return Object.keys(obj).filter(key => obj[key] === value);
+}
+
+function collB (obj) {
+    Object.keys(obj).forEach(key => {
+  const valB = obj[key];
+  console.log(valB);
+        console.log(collectB(valB));
+});
+return ;
 }
