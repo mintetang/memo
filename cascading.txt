@@ -1,0 +1,27 @@
+const inputArray = [
+  { id: 1, category: 'fruits', name: 'apple' },
+  { id: 2, category: 'vegetables', name: 'carrot' },
+  { id: 3, category: 'fruits', name: 'banana' },
+  { id: 4, category: 'vegetables', name: 'broccoli' },
+  { id: 5, category: 'fruits', name: 'orange' },
+];
+
+const cascadingArray = inputArray.reduce((acc, currentItem) => {
+  const { category, ...rest } = currentItem; // Destructure to get category and other properties
+
+  // Find if the category already exists in the accumulator
+  let existingCategory = acc.find(item => item.category === category);
+
+  if (!existingCategory) {
+    // If category doesn't exist, create a new entry
+    existingCategory = { category, items: [] };
+    acc.push(existingCategory);
+  }
+
+  // Add the current item (without the category key) to the items array of the found/new category
+  existingCategory.items.push(rest);
+
+  return acc;
+}, []);
+
+console.log(cascadingArray);
