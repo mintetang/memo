@@ -36,68 +36,30 @@ console.log(inputA,inputB,inputC);
     //save attendance history to localStorage attHis
     console.log(memoArray);
 
-    groupB = collectB(memoArray);
-    //groupA = collectA(memoArray);
-    console.log(groupB);
-    //console.log(groupA);
+    group = collect(memoArray);
+    console.log(group);
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
-    /*localStorage.setItem('memoArr', 
-          JSON.stringify(memoArray));*/
 }
 
-function collectB (array) {
+function collect (array) {
 
-    const groupB = {};
-    groupA = {};
-    console.log(groupA);
+    const group = {};
+
     array.forEach(obj => {
-    const key = obj.classB;
-    const value = obj.valC;
-    const akey = obj.classA;
+    const key = obj.classA;
+    const value = {[obj.classB]:obj.valC};
 
-    if (groupB[key] && groupA !== {}) {
+    if (group[key]) {
         // Key exists, push the value to the existing array
-        groupB[key].push(value);
-        groupA={[akey]:groupB};
-        console.log(groupA);
+        group[key].push(value);
     } else {
         // Key does not exist, create a new array with the value
-        groupB[key] = [value];
-        groupA={[akey]:groupB};
-        console.log(groupA);
+        group[key] = [value];
     }
     });
 
-    /*const arrayB = Object.keys(groupB).map(key => {
-    return {
-        [key]: groupB[key]
-    };
-    });
-    console.log(arrayB);*/
-
-    return groupB;
-  //return Object.keys(obj).filter(key => obj[key] === value);
-}
-
-function collectA (array) {
-
-    const groupA = {};
-
-    array.forEach(obj => {
-    const key = obj.ClassA;
-    const value = obj.classB;
-
-    if (groupA[key]) {
-        // Key exists, push the value to the existing array
-        groupA[key].push(value);
-    } else {
-        // Key does not exist, create a new array with the value
-        groupA[key] = [value];
-    }
-    });
-
-    return groupA;
+    return group;
   //return Object.keys(obj).filter(key => obj[key] === value);
 }
