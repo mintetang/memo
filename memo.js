@@ -26,67 +26,118 @@ function pushAb() {
 
     //group by same key value
     
-    const cascadingArray = memoArray.reduce((acc, currentItem) => {
+    const groupArray = memoArray.reduce((acc, currentItem) => {
     const { classA, classB, ...rest } = currentItem; // Destructure to get category and other properties
 
     // Find if the category already exists in the accumulator
-    let existingCategory = acc.find(item => item.classA === classA && item.classB === classB);
+    let existingCategory = acc.find(item => item.classA === classA 
+        && item.classB === classB);
 
     if (!existingCategory) {
         // If category doesn't exist, create a new entry
-        existingCategory = { classA, classB, items: [] };
+        existingCategory = { classA,classB, value: [] };
         acc.push(existingCategory);
     }
 
     // Add the current item (without the category key) to the items array of the found/new category
-    existingCategory.items.push(rest);
+    existingCategory.value.push(rest.valC);
 
     return acc;
     }, []);
 
-    console.log(cascadingArray);
+    console.log(groupArray);
 
     //old spared method
     //console.log(collect(memoArray));
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
+
+     // Update the result section
+    document.getElementById('noteData').
+        innerText = JSON.stringify(groupArray);
 }
 
-/*
-const groupA = memoArray.reduce((acc, currentItem) => {
-    const classA = currentItem.classA;
-    const classB = currentItem.classB;
-    if (!acc[classA]) {
-        acc[classA] = []; // Initialize an empty array for the classA if it doesn't exist
+function showreadForm() {
+    document.getElementById('readPopup').
+        style.display = 'block';
+}
+
+function exportLocalStorage() {
+  // 1. Get all localStorage data
+  const localStorageData = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    localStorageData[key] = localStorage.getItem(key);
+  }
+
+  // 2. Convert to a JSON string
+  const jsonString = JSON.stringify(localStorageData, null, 4);
+
+  // 3. Create a Blob and URL
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  // 4. Create and click a download link
+  const downloadLink = document.createElement('a');
+  downloadLink.href = url;
+  downloadLink.download = 'data.json';
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+  
+  //alert('Your localStorage data has been exported to data.json');
+}
+
+function rlsFromFile(event) {
+    const file = event.target.files[0];
+    if (!file) {
+        return;
     }
-    acc[classA].push(currentItem.classB); // Add the current item to the classA's array
-    if (!acc[classB]) {
-        acc[classB] = []; // Initialize an empty array for the classA if it doesn't exist
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            localStorage.clear(); // Clear existing localStorage before restoring
+            for (const key in data) {
+                localStorage.setItem(key, data[key]);
+            }
+            console.log('localStorage restored successfully!');
+            alert('成功讀回紀錄!');
+            location.reload();
+        } catch (error) {
+            console.error('Error parsing or restoring localStorage:', error);
+        }
+    };
+    reader.readAsText(file);
+    closePopup();
+}
+
+function cleanCurrent()
+    {
+    const reCheck = prompt('are U sure? type "YES" to confirm!');
+    if (reCheck === 'CONFIRM') {
+        localStorage.clear();
+        location.reload();
+        } else {
+    alert("Cancelled!");
     }
-    acc[classB].push(currentItem.valC); // Add the current item to the classA's array
-    return acc;
-    }, {});
 
-    console.log(groupA);
+}
 
-function collect (array) {
-
-    const group = {};
-
-    array.forEach(obj => {
-    const key = obj.classA;
-    const value = {[obj.classB]:obj.valC};
-
-    if (group[key]) {
-        // Key exists, push the value to the existing array
-        group[key].push(value);
-    } else {
-        // Key does not exist, create a new array with the value
-        group[key] = [value];
+function searchRoll() {
+    const rolltarget = document.getElementById("kword").value;
+    console.log(rolltarget);
+    // Define your attribute name and value as variables
+    const attributeName = "data-roll-number";
+    let attributeValue = String(rolltarget);
+    // Construct the CSS selector string using template literals
+    const selector = `[${attributeName}="${attributeValue}"]`;
+    // Find the first element matching the selector
+    const targetRoll = document.querySelector(selector);
+    console.log(targetRoll);
+    if (targetRoll) {
+            targetRoll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
-    });
-
-    return group;
-  //return Object.keys(obj).filter(key => obj[key] === value);
-}*/
