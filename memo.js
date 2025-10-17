@@ -6,7 +6,7 @@ function pushAb() {
         getElementById('inputB').value;
     const inputC = document.
         getElementById('inputC').value;
-console.log(inputA,inputB,inputC);
+//console.log(inputA,inputB,inputC);
 
     memoObj = {classA:inputA,classB:inputB,valC:inputC};
     //console.log(attObj);
@@ -36,13 +36,31 @@ console.log(inputA,inputB,inputC);
     //save attendance history to localStorage attHis
     console.log(memoArray);
 
-    groupA = collect(memoArray);
+    //group by same key value
+    const groupA = memoArray.reduce((acc, currentItem) => {
+    const classA = currentItem.classA;
+    const classB = currentItem.classB;
+    if (!acc[classA]) {
+        acc[classA] = []; // Initialize an empty array for the classA if it doesn't exist
+    }
+    acc[classA].push(currentItem.classB); // Add the current item to the classA's array
+    if (!acc[classB]) {
+        acc[classB] = []; // Initialize an empty array for the classA if it doesn't exist
+    }
+    acc[classB].push(currentItem.valC); // Add the current item to the classA's array
+    return acc;
+    }, {});
+
     console.log(groupA);
-    collB(groupA);
+    
+
+    //old spared method
+    //console.log(collect(memoArray));
 
     localStorage.setItem('memoArr', 
           JSON.stringify(memoArray));
 }
+
 
 function collect (array) {
 
@@ -63,34 +81,4 @@ function collect (array) {
 
     return group;
   //return Object.keys(obj).filter(key => obj[key] === value);
-}
-
-function collectB (array) {
-
-    const group = {};
-
-    array.forEach(obj => {
-    const key = obj.classB;
-    const value = obj.valC;
-
-    if (group[key]) {
-        // Key exists, push the value to the existing array
-        group[key].push(value);
-    } else {
-        // Key does not exist, create a new array with the value
-        group[key] = [value];
-    }
-    });
-
-    return group;
-  //return Object.keys(obj).filter(key => obj[key] === value);
-}
-
-function collB (obj) {
-    Object.keys(obj).forEach(key => {
-  const valB = obj[key];
-  console.log(valB);
-        console.log(collectB(valB));
-});
-return ;
 }
