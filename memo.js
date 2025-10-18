@@ -125,10 +125,16 @@ function rlsFromFile(event) {
     closePopup();
 }
 
+function closePopup() {
+    // Close the currently open popup
+    document.getElementById('readPopup').
+        style.display = 'none';
+}
+
 function cleanCurrent()
     {
     const reCheck = prompt('are U sure? type "YES" to confirm!');
-    if (reCheck === 'CONFIRM') {
+    if (reCheck === 'YES') {
         localStorage.clear();
         location.reload();
         } else {
@@ -138,13 +144,15 @@ function cleanCurrent()
 }
 
 function searchRoll() {
-    const kword = document.getElementById("kword").value;
-    console.log(kword);
+    const kword1 = document.getElementById("kword").value;
+    const kword2 = document.getElementById("aSelector").value;
+    console.log(kword1,kword2);
     // Define your attribute name and value as variables
     let targetElement = null;
     const allParagraphs = document.querySelectorAll('span');
     for (const p of allParagraphs) {
-        if (p.textContent.includes(String(kword))) {
+        if (p.textContent.includes(String(kword1)) || 
+        p.textContent.includes(String(kword2))) {
             targetElement = p;
             break;
         }
@@ -155,4 +163,10 @@ function searchRoll() {
         block: "start"      // Optional: align the top of the element with the top of the viewport
         });
     }
+}
+
+function clearInput() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputB').value = null;
+    document.getElementById('inputC').value = null;
 }

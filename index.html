@@ -33,12 +33,17 @@
             <button id="underKey" onclick="pushAb()">
             確認
             </button>
-            <button onclick="alert('please check all input again!')">
-            取消
+            <button onclick="clearInput()">
+            重新輸入
             </button>
             <label for="aSelector">Main Category:</label>
             <select id="aSelector" required 
-                onchange="showMemo()">
+                onchange="searchRoll()">
+            <option value="recent">recent</option>
+            <option value="home">home</option>
+            <option value="travel">travel</option>
+            <option value="church">church</option>
+            <option value="business">business</option>
             </select>
 
             <div id="readPopup" class="popup">
