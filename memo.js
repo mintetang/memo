@@ -50,6 +50,7 @@ function pushAb() {
     }, []);
 
     console.log(groupArray);
+    console.log(typeof(groupArray));
 
     //old spared method
     //console.log(collect(memoArray));
@@ -62,12 +63,7 @@ function pushAb() {
 
 }
 
-function showMemo() {
-         // Update the result section
-    document.getElementById('noteData').
-        innerText = localStorage.getItem('groupArr');
-    resultSection.style.display = 'block';
-}
+
 
 function showreadForm() {
     document.getElementById('readPopup').
@@ -200,4 +196,51 @@ function toInputTravel() {
     document.getElementById('inputA').value = null;
     document.getElementById('inputA').value = 
     document.querySelector('[value="travel"]').innerText;
+}
+
+function generateObjectReport(data) {
+    // Step 1: Group the objects by 'category'
+    const groupByKey = (arr, key) => {
+    return arr.reduce((result, currentValue) => {
+        // Get the category of the current object
+        const groupKey = currentValue[key];
+        // If the group doesn't exist, create it
+        if (!result[groupKey]) {
+        result[groupKey] = [];
+        }
+        // Add the current object to the correct group
+        result[groupKey].push(currentValue);
+        return result;
+    }, {});
+    };
+  // Step 2: Generate the cascading report
+    const generateObjectReport = (data) => {
+    const groupedData = groupByKey(data, 'classA');
+    
+    // Step 3: Format the report in a cascading style
+    let report = '';
+    for (const classA in groupedData) {
+        report += `${classA}:\n`;
+        groupedData[classA].forEach(item => {
+        report += `  - ${item.classB} (: ${item.value})\n`;
+        });
+        report += '\n'; // Add space between categories
+    }
+    return report;
+    };
+
+    // Step 4: Output the report
+    const report = generateObjectReport(data);
+    //console.log(report);
+    // To display in a browser:
+    document.getElementById('cReport').innerText = report;
+}
+
+function showMemo() {
+         // Update the result section
+    /*document.getElementById('noteData').
+        innerText = localStorage.getItem('groupArr');
+    resultSection.style.display = 'block';*/
+    groupArray = JSON.parse(localStorage.getItem('groupArr'));
+    generateObjectReport(groupArray);
 }

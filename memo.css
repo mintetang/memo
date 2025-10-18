@@ -4,6 +4,15 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
+p#cReport {
+    color:#3498db;
+    border: dashed blue;
+    padding: 1em;
+    color:#8b1a1a;
+    font-weight: bold;
+}
+
 .popup {
     display: none;
     position: fixed;
