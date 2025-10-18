@@ -59,6 +59,12 @@ button#underKey:hover {
     background-color:#55db34;
 }
 
+button[class="fastword"] {
+    background-color:gray;
+    padding: 10px;
+    display:inline-block
+}
+
 button#exlocal {
     background-color: #1a8b4f;
     border:solid;

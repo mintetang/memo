@@ -170,3 +170,34 @@ function clearInput() {
     document.getElementById('inputB').value = null;
     document.getElementById('inputC').value = null;
 }
+
+function toInputHome() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="home"]').innerText;
+}
+
+function toInputRecent() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="recent"]').innerText;
+}
+
+function toInputBusiness() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="business"]').innerText;
+}
+
+
+function toInputChurch() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="church"]').innerText;
+}
+
+function toInputTravel() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="travel"]').innerText;
+}
