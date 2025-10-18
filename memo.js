@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded",
+    function () {
+        showMemo();
+    });
 
 function pushAb() {
     const inputA = document.
@@ -54,10 +58,15 @@ function pushAb() {
           JSON.stringify(memoArray));
     localStorage.setItem('groupArr', 
           JSON.stringify(groupArray));
+    showMemo();
 
-     // Update the result section
+}
+
+function showMemo() {
+         // Update the result section
     document.getElementById('noteData').
         innerText = localStorage.getItem('groupArr');
+    resultSection.style.display = 'block';
 }
 
 function showreadForm() {

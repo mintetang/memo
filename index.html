@@ -16,9 +16,9 @@
     <div class="container">
         <div id="formSection">
             <h2>Memo Anytime</h2>
-            <button id="newMemo" 
-                onclick="clearAbc()">
-                New Memo
+            <button id="showMemo" 
+                onclick="showMemo()">
+                Show Memo
             </button>
            <label for="inputA">keyA: </label>
             <input type="text" id="inputA" required
@@ -38,7 +38,7 @@
             </button>
             <label for="aSelector">Main Category:</label>
             <select id="aSelector" required 
-                onchange="showStudentsList()">
+                onchange="showMemo()">
             </select>
 
             <div id="readPopup" class="popup">
@@ -64,7 +64,6 @@
             <div id="resultSection">
                 <h3>Listing</h3>
                 <p>
-                    My notes: 
                     <span id="noteData"></span>
                 </p>
             </div>

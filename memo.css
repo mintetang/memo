@@ -23,6 +23,16 @@ label[for="inputC" ]
 {
     color:brown;
 }
+label[for="kword" ]
+{
+    color:rgb(52, 42, 165);
+    display:inline-block;
+}
+select {
+    padding: 8px;
+    margin: 5px 10px;
+    border: 1px solid #ccc;
+}
 input {
     padding: 10px;
 }
