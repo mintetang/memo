@@ -144,7 +144,7 @@ function searchRoll() {
     //console.log(kword1,kword2);
     // Define your attribute name and value as variables
     let targetElement = null;
-    const allParagraphs = document.querySelectorAll('span');
+    const allParagraphs = document.querySelectorAll('p');
     for (const p of allParagraphs) {
         if (p.textContent.includes(String(kword1))) {
             targetElement = p;
