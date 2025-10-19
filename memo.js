@@ -102,7 +102,7 @@ function exportLocalStorage() {
     downloadLink.href = url;
     const dateTimeString = getFormattedDateTime();
     console.log(dateTimeString);
-    const filename = `data_${dateTimeString}.json`;
+    const filename = `memo_${dateTimeString}.json`;
     downloadLink.download = filename;
     document.body.appendChild(downloadLink);
     downloadLink.click();
