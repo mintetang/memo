@@ -50,7 +50,6 @@ function pushAb() {
     }, []);
 
     console.log(groupArray);
-    console.log(typeof(groupArray));
 
     //old spared method
     //console.log(collect(memoArray));
@@ -141,14 +140,13 @@ function cleanCurrent()
 
 function searchRoll() {
     const kword1 = document.getElementById("kword").value;
-    const kword2 = document.getElementById("aSelector").value;
-    console.log(kword1,kword2);
+    //const kword2 = document.getElementById("aSelector").value;
+    //console.log(kword1,kword2);
     // Define your attribute name and value as variables
     let targetElement = null;
     const allParagraphs = document.querySelectorAll('span');
     for (const p of allParagraphs) {
-        if (p.textContent.includes(String(kword1)) || 
-        p.textContent.includes(String(kword2))) {
+        if (p.textContent.includes(String(kword1))) {
             targetElement = p;
             break;
         }
@@ -198,6 +196,12 @@ function toInputTravel() {
     document.querySelector('[value="travel"]').innerText;
 }
 
+function toInputWord() {
+    document.getElementById('inputA').value = null;
+    document.getElementById('inputA').value = 
+    document.querySelector('[value="word"]').innerText;
+}
+
 function generateObjectReport(data) {
     // Step 1: Group the objects by 'category'
     const groupByKey = (arr, key) => {
@@ -215,8 +219,19 @@ function generateObjectReport(data) {
     };
   // Step 2: Generate the cascading report
     const generateObjectReport = (data) => {
-    const groupedData = groupByKey(data, 'classA');
-    
+    let groupedData = groupByKey(data, 'classA');
+
+    let selectedOne = document.getElementById("aSelector").value;
+    if (selectedOne !== "all"){
+    const keysToKeep = [selectedOne];// Keys you want to include
+        groupedData = Object.keys(groupedData)
+        .filter((key) => keysToKeep.includes(key)) // Filter keys based on your criteria
+        .reduce((acc, key) => {
+            acc[key] = groupedData[key]; // Add the key-value pair to the new object
+            return acc;
+        }, {});
+    console.log(groupedData);}
+
     // Step 3: Format the report in a cascading style
     let report = '';
     for (const classA in groupedData) {
@@ -231,6 +246,7 @@ function generateObjectReport(data) {
 
     // Step 4: Output the report
     const report = generateObjectReport(data);
+
     //console.log(report);
     // To display in a browser:
     document.getElementById('cReport').innerText = report;

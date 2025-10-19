@@ -28,6 +28,7 @@
                 <button class="fastword" onclick="toInputBusiness()" value="business">Business</button>
                 <button class="fastword" onclick="toInputTravel()" value="travel">Travel</button>
                 <button class="fastword" onclick="toInputChurch()" value="church">Church</button>
+                <button class="fastword" onclick="toInputWord()" value="word">Word</button>
             <label for="inputB">keyB: </label>
             <input type="text" id="inputB" required
                 size="20" >
@@ -43,12 +44,13 @@
             </button>
             <label for="aSelector">Main Category:</label>
             <select id="aSelector" required 
-                onchange="searchRoll()">
-            <option value="recent">recent</option>
-            <option value="home">home</option>
-            <option value="travel">travel</option>
-            <option value="church">church</option>
-            <option value="business">business</option>
+                onchange="showMemo()">
+            <option value="all">all</option>
+            <option value="Recent">Recent</option>
+            <option value="Home">Home</option>
+            <option value="Travel">Travel</option>
+            <option value="Church">Church</option>
+            <option value="Business">Business</option>
             </select>
 
             <div id="readPopup" class="popup">
