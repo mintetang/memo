@@ -13,6 +13,10 @@ p#cReport {
     font-weight: bold;
 }
 
+.highlight {
+            background-color: yellow;
+        }
+
 .popup {
     display: none;
     position: fixed;

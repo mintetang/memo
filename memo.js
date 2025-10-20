@@ -154,7 +154,7 @@ function cleanCurrent()
 
 }
 
-function searchRoll() {
+/*function searchRoll() {
     const kword1 = document.getElementById("kword").value;
     //const kword2 = document.getElementById("aSelector").value;
     //console.log(kword1,kword2);
@@ -173,7 +173,25 @@ function searchRoll() {
         block: "start"      // Optional: align the top of the element with the top of the viewport
         });
     }
-}
+}*/
+
+function searchAndHighlight() {
+            const searchTerm = document.getElementById("searchTermInput").value;
+            const contentDiv = document.getElementById("resultSection");
+
+            // Remove previous highlights
+            contentDiv.innerHTML = contentDiv.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, "$1");
+
+            if (searchTerm) {
+                const regex = new RegExp(searchTerm, "gi");
+                contentDiv.innerHTML = contentDiv.innerHTML.replace(regex, `<span class="highlight">${searchTerm}</span>`);
+
+                const firstHighlight = document.querySelector(".highlight");
+                if (firstHighlight) {
+                    firstHighlight.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+        }
 
 function clearInput() {
     document.getElementById('inputA').value = null;
