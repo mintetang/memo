@@ -180,11 +180,11 @@ function searchAndHighlight() {
             const contentDiv = document.getElementById("resultSection");
 
             // Remove previous highlights
-            contentDiv.innerHTML = contentDiv.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/gi, "$1");
+            contentDiv.innerHTML = contentDiv.innerHTML.replace(/<mark class="highlight">(.*?)<\/mark>/gi, "$1");
 
             if (searchTerm) {
                 const regex = new RegExp(searchTerm, "gi");
-                contentDiv.innerHTML = contentDiv.innerHTML.replace(regex, `<span class="highlight">${searchTerm}</span>`);
+                contentDiv.innerHTML = contentDiv.innerHTML.replace(regex, `<mark class="highlight">${searchTerm}</mark>`);
 
                 const firstHighlight = document.querySelector(".highlight");
                 if (firstHighlight) {
