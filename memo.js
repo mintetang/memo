@@ -331,6 +331,9 @@ function showMemo() {
     document.getElementById('authorize_button').addEventListener('click', function() {
     this.classList.add('dimmed');
     });
+    document.getElementById('upload_button').addEventListener('click', function() {
+    this.classList.add('dimmed');
+    });
     
     function maybeEnableButtons() {
       if (gapiInited && gisInited) {
@@ -373,5 +376,5 @@ function showMemo() {
       });
 
       const json = await res.json();
-      alert("✅ Uploaded! File ID: " + json.id);
+      alert("✅ 已完成上傳: hsinyi.json");
     }
