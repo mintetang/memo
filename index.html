@@ -1,100 +1,73 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0">
-    <title>Memo Anytime</title>
-    <link rel="stylesheet" href="memo.css">
-    <style></style>
-    <script></script>
+  <title>Upload LocalStorage to Google Drive</title>
+  <script src="https://apis.google.com/js/api.js"></script>
 </head>
-
 <body>
-    <div class="container">
-        <div id="formSection">
-            <h2>Memo Anytime</h2>
-            <button id="showMemo" 
-                onclick="showMemo()">
-                Show Memo
-            </button>
-           <label for="inputA">keyA: can select the "fastbuttons" on the list </label>
-            <input type="text" id="inputA" required
-                size="10" >
-                <button class="fastword" onclick="toInputHome()" value="home">Home</button>
-                <button class="fastword" onclick="toInputRecent()" value="recent">Recent</button>
-                <button class="fastword" onclick="toInputBusiness()" value="business">Business</button>
-                <button class="fastword" onclick="toInputTravel()" value="travel">Travel</button>
-                <button class="fastword" onclick="toInputChurch()" value="church">Church</button>
-                <button class="fastword" onclick="toInputWord()" value="word">Word</button>
-            <label for="inputB">keyB: </label>
-            <input type="text" id="inputB" required
-                size="20" >
-            <label for="inputC">keyC: </label>
-            <input type="text" id="inputC" required
-                size="60"  >
-            <br>
-            <button id="underKey" onclick="pushAb()">
-            確認
-            </button>
-            <button onclick="clearInput()">
-            重新輸入
-            </button>
-            <label for="aSelector">Main Category:</label>
-            <select id="aSelector" required 
-                onchange="showMemo()">
-            <option value="all">all</option>
-            <option value="Recent">Recent</option>
-            <option value="Home">Home</option>
-            <option value="Travel">Travel</option>
-            <option value="Church">Church</option>
-            <option value="Business">Business</option>
-            <option value="Word">Word</option>
-            </select>
+  <button id="authorize_button">Authorize</button>
+  <button id="upload_button" disabled>Upload LocalStorage to Drive</button>
 
-            <div id="readPopup" class="popup">
-            <h2>select json file</h2>
-            <!-- Retore localStorage from json -->
-            <label for="restoreFileInput">
-                select json file
-            </label>
-            <input type="file" id="restoreFileInput" 
-            accept=".json" onchange="rlsFromFile(event)">
+  <script>
+    const CLIENT_ID = "273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com";
+    const API_KEY = "AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo";
+    const SCOPES = "https://www.googleapis.com/auth/drive.file";
 
-            <button onclick="closePopup()">
-                取消
-            </button>
-            </div>
-            
-            <input type="text" id="searchTermInput" placeholder="Enter search term">
-            <button onclick="searchAndHighlight()">Search</button>
+    function gapiLoaded() {
+      gapi.load("client:auth2", initClient);
+    }
 
-            </div>
-       
-            <div id="resultSection">
-                <h3>Listing</h3>
-                <p id="cReport">
-                    <span id="noteData"></span>
-                </p>
-            </div>
-        
-    </div>
+    function initClient() {
+      gapi.client
+        .init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          scope: SCOPES,
+          discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+        })
+        .then(() => {
+          document.getElementById("authorize_button").onclick = handleAuthClick;
+          document.getElementById("upload_button").onclick = uploadLocalStorage;
+        });
+    }
 
-    <div>
-        <button id="exlocal" 
-        onclick="exportLocalStorage()">
-        儲存和輸出紀錄 
-        </button>
-        <button id="inlocal"
-        onclick="showreadForm()">
-        讀回紀錄
-        </button>
-        <button id="clean" 
-        onclick="cleanCurrent()">刪除目前內存記錄 
-        </button>
-    </div>
-    <script src="./memo.js"></script>
+    function handleAuthClick() {
+      gapi.auth2.getAuthInstance().signIn().then(() => {
+        document.getElementById("upload_button").disabled = false;
+      });
+    }
+
+    async function uploadLocalStorage() {
+      // Convert LocalStorage contents to JSON
+      const localData = JSON.stringify(localStorage);
+      const blob = new Blob([localData], { type: "application/json" });
+      const metadata = {
+        name: "localStorageBackup.json",
+        mimeType: "application/json",
+      };
+
+      const accessToken = gapi.auth.getToken().access_token;
+
+      const form = new FormData();
+      form.append(
+        "metadata",
+        new Blob([JSON.stringify(metadata)], { type: "application/json" })
+      );
+      form.append("file", blob);
+
+      const res = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+        method: "POST",
+        headers: new Headers({ Authorization: "Bearer " + accessToken }),
+        body: form,
+      });
+
+      const data = await res.json();
+      console.log("✅ File uploaded:", data);
+      alert("LocalStorage uploaded to Google Drive!");
+    }
+
+    // Load GAPI
+    gapiLoaded();
+  </script>
 </body>
 </html>
