@@ -97,13 +97,17 @@ button#upload_button {
     display:inline-flexbox;
 }
 
-#googleOutDiv {
+#googleOutDiv, #googleInDiv {
     border:solid;
-    background-color:rgb(255, 221, 0);
+    background-color:#f4f4f4
     display:inline-flexbox;
     float:right;
 }
-
+#googleInDiv {
+    margin-right: 2em;
+    border:solid;
+    display:inline-flexbox;
+}
 button.dimmed {
   background-color: darkgray; /* Dimmed background color */
   color: #ccc; /* Lighter text color for dimmed state */

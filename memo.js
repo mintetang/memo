@@ -378,3 +378,40 @@ function showMemo() {
       const json = await res.json();
       alert("✅ 已完成上傳: hsinyi.json");
     }
+
+    function getGoogleDriveFileIdFromUrl(url) {
+        const regex = /\/d\/([a-zA-Z0-9_-]+)/;
+        const match = url.match(regex);
+        if (match && match[1]) {
+            return match[1];
+        }
+        return null; // Or throw an error if the ID isn't found
+        }
+
+        // Example usage:
+        
+    async function googleIn(fileId, accessToken) {
+        const fileUrl = "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2/view?usp=drive_link";
+        const fileId = getGoogleDriveFileIdFromUrl(fileUrl);
+        console.log(fileId); // Output: 
+        const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+        const fetchOptions = {
+            method: 'GET',
+            headers: {
+            Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        try {
+            const response = await fetch(fetchUrl, fetchOptions);
+            if (!response.ok) {
+            throw new Error(`Error fetching file: ${response.statusText}`);
+            }
+            const fileContent = await response.json(); // or .blob(), .json(), etc., depending on file type
+            console.log('File Content:', fileContent);
+            return fileContent;
+        } catch (error) {
+            console.error('Failed to read file:', error);
+            return null;
+        }
+    }
