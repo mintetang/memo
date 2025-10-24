@@ -342,7 +342,7 @@ function googleOut() {
        // client_id: CLIENT_ID,
        // scope: SCOPES,
        // callback: "", // Set later
-      });
+      //});
       //gisInited = true;
       //maybeEnableButtons();
     //};
