@@ -323,8 +323,15 @@ function googleOut() {
         scope: SCOPES,
         callback: "", // Set later
       });
+      google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: "", // Set later
+      });
       gisInited = true;
-      maybeEnableButtons();
+    document.getElementById("authorize_button").onclick = handleAuthClick;
+    document.getElementById("upload_button").onclick = uploadToDrive;
+    maybeEnableButtons();
     //};
 
     // Load GAPI client
@@ -334,8 +341,7 @@ function googleOut() {
       maybeEnableButtons();
     });
     
-    document.getElementById("authorize_button").onclick = handleAuthClick;
-    document.getElementById("upload_button").onclick = uploadToDrive;
+
 }
     function maybeEnableButtons() {
       if (gapiInited && gisInited) {
