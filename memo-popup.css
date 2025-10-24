@@ -91,13 +91,8 @@ button#exlocal {
 
 }
 
-button#upload_button {
+button#googleOut {
     background-color: #1a8b85;
-    border:solid;
-    display:inline-flexbox;
-}
-
-#googleOutDiv {
     border:solid;
     display:inline-flexbox;
     float:right;
