@@ -1,73 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Upload LocalStorage to Google Drive</title>
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
+  <h2>Upload LocalStorage Data to Google Drive</h2>
   <button id="authorize_button">Authorize</button>
-  <button id="upload_button" disabled>Upload LocalStorage to Drive</button>
+  <button id="upload_button" disabled>Upload to Drive</button>
 
   <script>
-    const CLIENT_ID = "273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com";
-    const API_KEY = "AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo";
+    const CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+    const API_KEY = "YOUR_API_KEY";
     const SCOPES = "https://www.googleapis.com/auth/drive.file";
+    const DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
 
-    function gapiLoaded() {
-      gapi.load("client:auth2", initClient);
-    }
+    let tokenClient;
+    let gapiInited = false;
+    let gisInited = false;
 
-    function initClient() {
-      gapi.client
-        .init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
-          scope: SCOPES,
-          discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-        })
-        .then(() => {
-          document.getElementById("authorize_button").onclick = handleAuthClick;
-          document.getElementById("upload_button").onclick = uploadLocalStorage;
-        });
+    document.getElementById("authorize_button").onclick = handleAuthClick;
+    document.getElementById("upload_button").onclick = uploadToDrive;
+
+    // Load GAPI client
+    gapi.load("client", async () => {
+      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
+      gapiInited = true;
+      maybeEnableButtons();
+    });
+
+    // Initialize Google Identity Services
+    window.onload = () => {
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: "", // Set later
+      });
+      gisInited = true;
+      maybeEnableButtons();
+    };
+
+    function maybeEnableButtons() {
+      if (gapiInited && gisInited) {
+        document.getElementById("authorize_button").disabled = false;
+      }
     }
 
     function handleAuthClick() {
-      gapi.auth2.getAuthInstance().signIn().then(() => {
+      tokenClient.callback = async (resp) => {
+        if (resp.error) throw resp;
         document.getElementById("upload_button").disabled = false;
-      });
+      };
+      tokenClient.requestAccessToken({ prompt: "consent" });
     }
 
-    async function uploadLocalStorage() {
-      // Convert LocalStorage contents to JSON
-      const localData = JSON.stringify(localStorage);
-      const blob = new Blob([localData], { type: "application/json" });
+    async function uploadToDrive() {
+      // Example: get all localStorage data
+      const allData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        allData[key] = localStorage.getItem(key);
+      }
+
+      const fileContent = JSON.stringify(allData, null, 2);
+      const file = new Blob([fileContent], { type: "application/json" });
       const metadata = {
-        name: "localStorageBackup.json",
+        name: "localStorage_backup.json",
         mimeType: "application/json",
       };
 
-      const accessToken = gapi.auth.getToken().access_token;
-
+      const accessToken = gapi.client.getToken().access_token;
       const form = new FormData();
-      form.append(
-        "metadata",
-        new Blob([JSON.stringify(metadata)], { type: "application/json" })
-      );
-      form.append("file", blob);
+      form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+      form.append("file", file);
 
-      const res = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", {
+      const res = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", {
         method: "POST",
         headers: new Headers({ Authorization: "Bearer " + accessToken }),
         body: form,
       });
 
-      const data = await res.json();
-      console.log("✅ File uploaded:", data);
-      alert("LocalStorage uploaded to Google Drive!");
+      const json = await res.json();
+      alert("✅ Uploaded! File ID: " + json.id);
     }
-
-    // Load GAPI
-    gapiLoaded();
   </script>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 </html>
