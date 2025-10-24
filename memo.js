@@ -340,7 +340,6 @@ function googleOut() {
       gapiInited = true;
       maybeEnableButtons();
     });
-    
 
 }
     function maybeEnableButtons() {
@@ -349,6 +348,11 @@ function googleOut() {
       }
     }
 
+        //make button dimmed after clicked
+    document.getElementById('authorize_button').addEventListener('click', function() {
+    this.classList.add('dimmed');
+    });
+    
     function handleAuthClick() {
       tokenClient.callback = async (resp) => {
         if (resp.error) throw resp;

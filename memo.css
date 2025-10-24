@@ -97,3 +97,10 @@ button#googleOut {
     display:inline-flexbox;
     float:right;
 }
+
+button.dimmed {
+  background-color: darkgray; /* Dimmed background color */
+  color: #ccc; /* Lighter text color for dimmed state */
+  cursor: default; /* Change cursor to indicate it's no longer fully active */
+  pointer-events: none; /* Optional: prevent further clicks on the dimmed button */
+}
