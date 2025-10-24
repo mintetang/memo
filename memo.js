@@ -390,8 +390,30 @@ function showMemo() {
 
         // Example usage:
         const fileUrl = "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2/view?usp=drive_link";
-        const fileId = getGoogleDriveFileIdFromUrl(fileUrl);    
-    async function googleIn(fileId, accessToken) {
+        const fileId = getGoogleDriveFileIdFromUrl(fileUrl);
+        function googleIn() {gapi.load("client:auth2", start);}
+        function start() {
+        gapi.client.init({
+            apiKey: "AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo",
+            clientId: "273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com",
+            scope: "https://www.googleapis.com/auth/drive.readonly",
+            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"]
+        }).then(() => {
+            return gapi.auth2.getAuthInstance().signIn();
+        }).then(() => {
+            const fileId = getGoogleDriveFileIdFromUrl(fileUrl);
+            return gapi.client.drive.files.get({
+            fileId: fileId,
+            alt: "media"
+            });
+        }).then(response => {
+            const jsonData = response.result;
+            console.log("JSON data:", jsonData);
+        }).catch(error => {
+            console.error("Error:", error);
+        });
+        }    
+    /*async function googleIn(fileId, accessToken) {
         console.log(fileId); // Output: 
         const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
         const fetchOptions = {
@@ -413,4 +435,4 @@ function showMemo() {
             console.error('Failed to read file:', error);
             return null;
         }
-    }
+    }*/
