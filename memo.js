@@ -327,16 +327,21 @@ function googleOut() {
         scope: SCOPES,
         callback: "", // Set later
       });
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: "", // Set later
+      });
       gapiInited = true;
       maybeEnableButtons();
     });
 
     // Initialize Google Identity Services
     //window.onload = () => {
-      tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        callback: "", // Set later
+     // tokenClient = google.accounts.oauth2.initTokenClient({
+       // client_id: CLIENT_ID,
+       // scope: SCOPES,
+       // callback: "", // Set later
       });
       //gisInited = true;
       //maybeEnableButtons();
