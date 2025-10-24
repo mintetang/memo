@@ -316,6 +316,13 @@ function googleOut() {
     let gapiInited = false;
     let gisInited = false;
 
+    // Load GAPI client
+    gapi.load("client", async () => {
+      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
+      gapiInited = true;
+      maybeEnableButtons();
+    });
+
     // Initialize Google Identity Services --jt
     //window.onload = () => {
       tokenClient = google.accounts.oauth2.initTokenClient({
@@ -329,17 +336,11 @@ function googleOut() {
         callback: "", // Set later
       });
       gisInited = true;
+
     document.getElementById("authorize_button").onclick = handleAuthClick;
     document.getElementById("upload_button").onclick = uploadToDrive;
     maybeEnableButtons();
     //};
-
-    // Load GAPI client
-    gapi.load("client", async () => {
-      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
-      gapiInited = true;
-      maybeEnableButtons();
-    });
 
 }
     function maybeEnableButtons() {
@@ -352,7 +353,7 @@ function googleOut() {
     document.getElementById('authorize_button').addEventListener('click', function() {
     this.classList.add('dimmed');
     });
-    
+
     function handleAuthClick() {
       tokenClient.callback = async (resp) => {
         if (resp.error) throw resp;
