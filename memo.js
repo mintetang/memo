@@ -389,7 +389,7 @@ function showMemo() {
         }
 
         // Example usage:
-        const fileUrl = "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2/view?usp=drive_link";
+        const fileUrl = "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
         const fileId = getGoogleDriveFileIdFromUrl(fileUrl);
         console.log(fileId);
 
