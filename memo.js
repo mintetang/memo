@@ -294,3 +294,89 @@ function showMemo() {
     groupArray = JSON.parse(localStorage.getItem('groupArr'));
     generateObjectReport(groupArray);
 }
+
+// for Google Output to drive
+function googleOutForm() {
+    document.getElementById('googleOutPopup').
+        style.display = 'block';
+}
+function closePopup() {
+    // Close the currently open popup
+    document.getElementById('googleOutPopup').
+        style.display = 'none';
+}
+
+function googleOut() {
+    const CLIENT_ID = "273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com";
+    const API_KEY = "AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo";
+    const SCOPES = "https://www.googleapis.com/auth/drive.file";
+    const DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+
+    let tokenClient;
+    let gapiInited = false;
+    let gisInited = false;
+
+    document.getElementById("authorize_button").onclick = handleAuthClick;
+    document.getElementById("upload_button").onclick = uploadToDrive;
+
+    // Load GAPI client
+    gapi.load("client", async () => {
+      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
+      gapiInited = true;
+      maybeEnableButtons();
+    });
+
+    // Initialize Google Identity Services
+    window.onload = () => {
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: "", // Set later
+      });
+      gisInited = true;
+      maybeEnableButtons();
+    };
+}
+    function maybeEnableButtons() {
+      if (gapiInited && gisInited) {
+        document.getElementById("authorize_button").disabled = false;
+      }
+    }
+
+    function handleAuthClick() {
+      tokenClient.callback = async (resp) => {
+        if (resp.error) throw resp;
+        document.getElementById("upload_button").disabled = false;
+      };
+      tokenClient.requestAccessToken({ prompt: "consent" });
+    }
+
+    async function uploadToDrive() {
+      // Example: get all localStorage data
+      const allData = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        allData[key] = localStorage.getItem(key);
+      }
+
+      const fileContent = JSON.stringify(allData, null, 2);
+      const file = new Blob([fileContent], { type: "application/json" });
+      const metadata = {
+        name: "hsinyi.json",
+        mimeType: "application/json",
+      };
+
+      const accessToken = gapi.client.getToken().access_token;
+      const form = new FormData();
+      form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+      form.append("file", file);
+
+      const res = await fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id", {
+        method: "POST",
+        headers: new Headers({ Authorization: "Bearer " + accessToken }),
+        body: form,
+      });
+
+      const json = await res.json();
+      alert("✅ Uploaded! File ID: " + json.id);
+    }

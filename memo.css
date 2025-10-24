@@ -78,13 +78,21 @@ button[class="fastword"] {
     display:inline-block
 }
 
+button#clean {
+    background-color: #8b1a1a;
+    border:solid;
+    display:inline-flexbox;
+    float:right;
+}
+
 button#exlocal {
     background-color: #1a8b4f;
     border:solid;
+
 }
 
-button#clean {
-    background-color: #8b1a1a;
+button#googleOut {
+    background-color: #1a8b85;
     border:solid;
     display:inline-flexbox;
     float:right;
