@@ -1,0 +1,81 @@
+"Not a valid origin for the client: https://memo2.wasmer.app has not been registered for client ID Y273160542369-aqrfvsj6qlamoj1hfv7diagp3onpmpnc.apps.googleusercontent.com. Please go to https://console.developers.google.com/ and register this origin for your project's client ID."
+
+"Not a valid origin for the client: https://memo2.wasmer.app has not been registered for client ID Y273160542369-aqrfvsj6qlamoj1hfv7diagp3onpmpnc.apps.googleusercontent.com. Please go to https://console.developers.google.com/ and register this origin for your project's client ID."
+
+"You have created a new client application that uses libraries for user authentication or authorization that are deprecated. New clients must use the new libraries instead. See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
+
+"You have created a new client application that uses libraries for user authentication or authorization that are deprecated. New clients must use the new libraries instead. See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
+
+"gapi.auth2 has been initialized with different options. Consider calling gapi.auth2.getAuthInstance() instead of gapi.auth2.init()."
+
+API Key : AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo
+Client ID : 273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com
+
+"You have created a new client application that uses libraries for user authentication or authorization that are deprecated. New clients must use the new libraries instead. See the [Migration Guide](https://developers.google.com/identity/gsi/web/guides/gis-migration) for more information."
+
+apiKey: "AIzaSyDZkfoh01VUEwX_uK3xn3jVvMLssdPCqoo",
+    clientId: "273160542369-ttt03gmv0iio70vek53dqrqcfs9rt1a6.apps.googleusercontent.com",
+    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+    scope: "https://www.googleapis.com/auth/drive.file",
+	
+    // Example: Retrieving data from localStorage and sending to server
+    const dataToUpload = localStorage.getItem('myAppData');
+
+    if (dataToUpload) {
+        fetch('/upload-to-drive', { // Your server-side endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: dataToUpload }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Upload successful:', result);
+        })
+        .catch(error => {
+            console.error('Error uploading data:', error);
+        });
+    }
+	
+	    // Example: Server-side (Node.js with Express and googleapis)
+    const express = require('express');
+    const { google } = require('googleapis');
+    const app = express();
+    app.use(express.json()); // To parse JSON request bodies
+
+    // Configure Google Drive API (replace with your actual credentials and setup)
+    const auth = new google.auth.GoogleAuth({
+        keyFile: 'path/to/your/service-account-key.json', // Or other auth method
+        scopes: ['https://www.googleapis.com/auth/drive.file'],
+    });
+    const drive = google.drive({ version: 'v3', auth });
+
+    app.post('/upload-to-drive', async (req, res) => {
+        try {
+            const { data } = req.body; // Data from localStorage
+            const fileName = `localStorage_backup_${Date.now()}.json`;
+
+            const fileMetadata = {
+                name: fileName,
+                mimeType: 'application/json',
+            };
+            const media = {
+                mimeType: 'application/json',
+                body: data, // The actual data content
+            };
+
+            const response = await drive.files.create({
+                resource: fileMetadata,
+                media: media,
+                fields: 'id',
+            });
+
+            res.status(200).json({ message: 'File uploaded successfully', fileId: response.data.id });
+        } catch (error) {
+            console.error('Error uploading to Google Drive:', error);
+            res.status(500).json({ error: 'Failed to upload data to Google Drive' });
+        }
+    });
+
+    app.listen(3000, () => console.log('Server running on port 3000'));
