@@ -316,18 +316,8 @@ function googleOut() {
     let gapiInited = false;
     let gisInited = false;
 
-    document.getElementById("authorize_button").onclick = handleAuthClick;
-    document.getElementById("upload_button").onclick = uploadToDrive;
-
-    // Load GAPI client
-    gapi.load("client", async () => {
-      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
-      gapiInited = true;
-      maybeEnableButtons();
-    });
-
-    // Initialize Google Identity Services
-    window.onload = () => {
+    // Initialize Google Identity Services --jt
+    //window.onload = () => {
       tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES,
@@ -335,7 +325,17 @@ function googleOut() {
       });
       gisInited = true;
       maybeEnableButtons();
-    };
+    //};
+
+    // Load GAPI client
+    gapi.load("client", async () => {
+      await gapi.client.init({ apiKey: API_KEY, discoveryDocs: [DISCOVERY_DOC] });
+      gapiInited = true;
+      maybeEnableButtons();
+    });
+    
+    document.getElementById("authorize_button").onclick = handleAuthClick;
+    document.getElementById("upload_button").onclick = uploadToDrive;
 }
     function maybeEnableButtons() {
       if (gapiInited && gisInited) {
