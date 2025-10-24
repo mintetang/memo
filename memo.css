@@ -99,6 +99,7 @@ button#upload_button {
 
 #googleOutDiv {
     border:solid;
+    background-color:rgb(255, 221, 0);
     display:inline-flexbox;
     float:right;
 }
