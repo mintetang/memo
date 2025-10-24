@@ -336,6 +336,17 @@ function googleOut() {
       maybeEnableButtons();
     });
 
+    // Initialize Google Identity Services
+    //window.onload = () => {
+     tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: "", // Set later
+      });
+      gisInited = true;
+      maybeEnableButtons();
+    //};
+
 }
     function maybeEnableButtons() {
       if (gapiInited && gisInited) {
@@ -349,11 +360,6 @@ function googleOut() {
     });
 
     function handleAuthClick() {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        callback: "", // Set later
-      });
       tokenClient.callback = async (resp) => {
         if (resp.error) throw resp;
         document.getElementById("upload_button").disabled = false;
