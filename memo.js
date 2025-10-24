@@ -389,10 +389,9 @@ function showMemo() {
         }
 
         // Example usage:
-        
-    async function googleIn(fileId, accessToken) {
         const fileUrl = "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2/view?usp=drive_link";
-        const fileId = getGoogleDriveFileIdFromUrl(fileUrl);
+        const fileId = getGoogleDriveFileIdFromUrl(fileUrl);    
+    async function googleIn(fileId, accessToken) {
         console.log(fileId); // Output: 
         const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
         const fetchOptions = {
