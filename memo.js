@@ -359,7 +359,7 @@ function googleOut() {
     this.classList.add('dimmed');
     });
 
-    function handleAuthClick() {
+    function handleAuthClick(tokenClient) {
       tokenClient.callback = async (resp) => {
         if (resp.error) throw resp;
         document.getElementById("upload_button").disabled = false;
