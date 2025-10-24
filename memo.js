@@ -332,8 +332,8 @@ function googleOut() {
         scope: SCOPES,
         callback: "", // Set later
       });
-      gapiInited = true;
-      maybeEnableButtons();
+      //gapiInited = true;
+      //maybeEnableButtons();
     });
 
     // Initialize Google Identity Services
