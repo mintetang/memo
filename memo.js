@@ -382,7 +382,7 @@ async function uploadToDrive() {
   );
 
   const json = await res.json();
-  alert("✅ 已完成上傳: hsinyi.json");
+  alert("✅ 已完成上傳: File ID: " + json.id);
 }
 
 function getGoogleDriveFileIdFromUrl(url) {
