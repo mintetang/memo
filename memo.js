@@ -407,7 +407,7 @@ async function googleIn() {
   //    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
   //fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
   
-  if (fileID !== undefined){
+  if (typeof(fileID) !== undefined){
     console.log(fileId);}
     else {
   fileID = document.getElementById("pfileID").innerText;}
