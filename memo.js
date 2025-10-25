@@ -350,12 +350,7 @@ function handleAuthClick() {
 }
 
 //declaire fileId to set in upload and use in googleIn
-
-function setFileID() {
-  if (fileId === undefined) 
-    globalThis.fileId = "";
-  }
-setFileID();
+let fileID = document.getElementById("pfileID").innerText;
 
 async function uploadToDrive() {
   // Example: get all localStorage data
@@ -390,9 +385,9 @@ async function uploadToDrive() {
   );
 
   const json = await res.json();
-  fileId = json.id;
+  document.getElementById("pfileID").innerText = json.id;
   alert("✅ 已完成上傳: File ID: " + json.id);
-  return fileId;
+  return;
 }
 
 function getGoogleDriveFileIdFromUrl(url) {
@@ -412,6 +407,7 @@ async function googleIn() {
   //  const fileUrl =
   //    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
   //fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
+  fileID = document.getElementById("pfileID").innerText;
   console.log(fileId);
   const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
   const fetchOptions = {
