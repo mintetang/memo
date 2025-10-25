@@ -350,8 +350,11 @@ function handleAuthClick() {
 }
 
 //declaire fileId to set in upload and use in googleIn
-if (fieldId === undefined){
-let fileId;
+
+If (fileId === undefined) {defineGlobal()}
+
+function defineGlobal() {
+  globalThis.fileId = "";
 }
 
 async function uploadToDrive() {
@@ -365,7 +368,7 @@ async function uploadToDrive() {
   const fileContent = JSON.stringify(allData, null, 2);
   const file = new Blob([fileContent], { type: "application/json" });
   const metadata = {
-    name: "hsinyi.json",
+    name: "memo.json",
     mimeType: "application/json",
   };
 
@@ -388,8 +391,8 @@ async function uploadToDrive() {
 
   const json = await res.json();
   fileId = json.id;
-  return fileId;
   alert("✅ 已完成上傳: File ID: " + json.id);
+  return fileId;
 }
 
 function getGoogleDriveFileIdFromUrl(url) {
