@@ -412,7 +412,15 @@ function showMemo() {
             }
             const fileContent = await response.json(); // or .blob(), .json(), etc., depending on file type
             console.log('File Content:', fileContent);
-            return fileContent;
+            const data = JSON.parse(fileContent);
+            localStorage.clear(); // Clear existing localStorage before restoring
+            for (const key in data) {
+                localStorage.setItem(key, data[key]);
+            }
+            console.log('localStorage restored successfully!');
+            alert('成功讀回紀錄!');
+            location.reload();
+            //return fileContent;
         } catch (error) {
             console.error('Failed to read file:', error);
             return null;
