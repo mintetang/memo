@@ -128,6 +128,7 @@ button.dimmed {
 
 button.blink {
   animation: blink-animation 1s infinite alternate; /* 1s duration, infinite, alternates between keyframes */
+animation: blink-animation 1s 5 alternate; /* 1s duration, 5 seconds, alternates between keyframes */
 }
 
 @keyframes blink-animation {
