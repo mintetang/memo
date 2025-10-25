@@ -349,6 +349,10 @@ function handleAuthClick() {
   tokenClient.requestAccessToken({ prompt: "consent" });
 }
 
+//declaire fileId to set in upload and use in googleIn
+
+let fileId;
+
 async function uploadToDrive() {
   // Example: get all localStorage data
   const allData = {};
@@ -382,6 +386,8 @@ async function uploadToDrive() {
   );
 
   const json = await res.json();
+  fileId = json.id;
+  return fileId;
   alert("✅ 已完成上傳: File ID: " + json.id);
 }
 
@@ -399,9 +405,9 @@ function getGoogleDriveFileIdFromUrl(url) {
 async function googleIn() {
   accessToken = gapi.client.getToken().access_token;
   console.log(accessToken);
-//  const fileUrl =
-//    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
-  const fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
+  //  const fileUrl =
+  //    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
+  //fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
   console.log(fileId);
   const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
   const fetchOptions = {
