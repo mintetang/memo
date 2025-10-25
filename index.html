@@ -1,120 +1,112 @@
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memo Anytime</title>
-    <link rel="stylesheet" href="memo.css">
+    <link rel="stylesheet" href="memo.css" />
     <style></style>
     <script src="https://apis.google.com/js/api.js"></script>
     <!-- Google Identity Services -->
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div id="formSection">
-            <h2>Memo Anytime</h2>            
-            <button id="inlocal"
-            onclick="showreadForm()">
-            讀回紀錄檔案
-            </button>
-            <button id="exlocal" 
-            onclick="exportLocalStorage()">
-            儲存和輸出-檔案 
-            </button>
-            <button id="showMemo" 
-            onclick="showMemo()">
-            Show Memo
-            </button>
-        <div id="googleOutDiv" >
-        <label>
-            上傳Google: 請"登入認證" <br>
+      <div id="formSection">
+        <h2>Memo Anytime</h2>
+        <button id="inlocal" onclick="showreadForm()">讀回紀錄檔案</button>
+        <button id="exlocal" onclick="exportLocalStorage()">
+          儲存和輸出-檔案
+        </button>
+        <button id="showMemo" onclick="showMemo()">Show Memo</button>
+        <div id="googleOutDiv">
+          <label>
+            上傳Google: 請"登入認證" <br />
             之後==>“上傳Google”
-        </label>
-        <button id="authorize_button">登入認證</button>
-        <button id="upload_button" disabled>上傳Google</button>
+          </label>
+          <button id="authorize_button">登入認證</button>
+          <button id="upload_button" disabled>上傳Google</button>
         </div>
-        <div id="googleInDiv" >
-        <label>
-            讀回Google檔案
-        </label>
-        <button id="googleIn"
-            onclick="googleIn()">
-            讀回Google檔案
-            </button>
+        <div id="googleInDiv">
+          <label> 讀回Google檔案 </label>
+          <button id="googleIn" onclick="googleIn()">讀回Google檔案</button>
         </div>
-           <label for="inputA">keyA: can select the "fastbuttons" on the list </label>
-            <input type="text" id="inputA" required
-                size="10" >
-                <button class="fastword" onclick="toInputHome()" value="home">Home</button>
-                <button class="fastword" onclick="toInputRecent()" value="recent">Recent</button>
-                <button class="fastword" onclick="toInputBusiness()" value="business">Business</button>
-                <button class="fastword" onclick="toInputTravel()" value="travel">Travel</button>
-                <button class="fastword" onclick="toInputChurch()" value="church">Church</button>
-                <button class="fastword" onclick="toInputWord()" value="word">Word</button>
-            <label for="inputB">keyB: </label>
-            <input type="text" id="inputB" required
-                size="20" >
-            <label for="inputC">keyC: </label>
-            <input type="text" id="inputC" required
-                size="60"  >
-            <br>
-            <button id="underKey" onclick="pushAb()">
-            確認
-            </button>
-            <button onclick="clearInput()">
-            重新輸入
-            </button>
-            <label for="aSelector">Main Category:</label>
-            <select id="aSelector" required 
-                onchange="showMemo()">
-            <option value="all">all</option>
-            <option value="Recent">Recent</option>
-            <option value="Home">Home</option>
-            <option value="Travel">Travel</option>
-            <option value="Church">Church</option>
-            <option value="Business">Business</option>
-            <option value="Word">Word</option>
-            </select>
+        <label for="inputA"
+          >keyA: can select the "fastbuttons" on the list
+        </label>
+        <input type="text" id="inputA" required size="10" />
+        <button class="fastword" onclick="toInputHome()" value="home">
+          Home
+        </button>
+        <button class="fastword" onclick="toInputRecent()" value="recent">
+          Recent
+        </button>
+        <button class="fastword" onclick="toInputBusiness()" value="business">
+          Business
+        </button>
+        <button class="fastword" onclick="toInputTravel()" value="travel">
+          Travel
+        </button>
+        <button class="fastword" onclick="toInputChurch()" value="church">
+          Church
+        </button>
+        <button class="fastword" onclick="toInputWord()" value="word">
+          Word
+        </button>
+        <label for="inputB">keyB: </label>
+        <input type="text" id="inputB" required size="20" />
+        <label for="inputC">keyC: </label>
+        <input type="text" id="inputC" required size="60" />
+        <br />
+        <button id="underKey" onclick="pushAb()">確認</button>
+        <button onclick="clearInput()">重新輸入</button>
+        <label for="aSelector">Main Category:</label>
+        <select id="aSelector" required onchange="showMemo()">
+          <option value="all">all</option>
+          <option value="Recent">Recent</option>
+          <option value="Home">Home</option>
+          <option value="Travel">Travel</option>
+          <option value="Church">Church</option>
+          <option value="Business">Business</option>
+          <option value="Word">Word</option>
+        </select>
 
-            <div id="readPopup" class="popup">
-            <h2>select json file</h2>
-            <!-- Retore localStorage from json -->
-            <label for="restoreFileInput">
-                select json file
-            </label>
-            <input type="file" id="restoreFileInput" 
-            accept=".json" onchange="rlsFromFile(event)">
+        <div id="readPopup" class="popup">
+          <h2>select json file</h2>
+          <!-- Retore localStorage from json -->
+          <label for="restoreFileInput"> select json file </label>
+          <input
+            type="file"
+            id="restoreFileInput"
+            accept=".json"
+            onchange="rlsFromFile(event)"
+          />
 
-            <button onclick="closePopup()">
-                取消
-            </button>
-            </div>
-            
-            <input type="text" id="searchTermInput" placeholder="Enter search term">
-            <button onclick="searchAndHighlight()">Search</button>
+          <button onclick="closePopup()">取消</button>
+        </div>
 
-            </div>
-       
-            <div id="resultSection">
-                <h3>Listing</h3>
-                <p id="cReport">
-                    <span id="noteData"></span>
-                </p>
-            </div>
-        
+        <input
+          type="text"
+          id="searchTermInput"
+          placeholder="Enter search term"
+        />
+        <button onclick="searchAndHighlight()">Search</button>
+      </div>
+
+      <div id="resultSection">
+        <h3>Listing</h3>
+        <p id="cReport">
+          <span id="noteData"></span>
+        </p>
+      </div>
     </div>
 
     <div>
-        <button id="clean" 
-        onclick="cleanCurrent()">刪除目前內存記錄 
-        </button>
+      <button id="clean" onclick="cleanCurrent()">刪除目前內存記錄</button>
     </div>
-        <script src="./memo.js"></script>
-        <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-</body>
+    <script src="./memo.js"></script>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </body>
 </html>
