@@ -331,7 +331,11 @@ document.getElementById("upload_button").addEventListener("click", function () {
   this.classList.add("blink");
 });
 
-document.getElementById("upload_button").addEventListener("click", function () {
+document.getElementById("googleIn").addEventListener("click", function () {
+  this.classList.add("blink");
+});
+
+document.getElementById("update_button").addEventListener("click", function () {
   this.classList.add("blink");
 });
 
