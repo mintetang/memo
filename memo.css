@@ -125,3 +125,19 @@ button.dimmed {
   cursor: default; /* Change cursor to indicate it's no longer fully active */
   pointer-events: none; /* Optional: prevent further clicks on the dimmed button */
 }
+
+button.blink {
+  animation: blink-animation 1s infinite alternate; /* 1s duration, infinite, alternates between keyframes */
+}
+
+@keyframes blink-animation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2; /* Button becomes semi-transparent */
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -321,14 +321,18 @@ window.onload = () => {
   maybeEnableButtons();
 };
 
-//make button dimmed after clicked
+//make button dimmed or blink after clicked
 document
   .getElementById("authorize_button")
   .addEventListener("click", function () {
     this.classList.add("dimmed");
   });
 document.getElementById("upload_button").addEventListener("click", function () {
-  this.classList.add("dimmed");
+  this.classList.add("blink");
+});
+
+document.getElementById("upload_button").addEventListener("click", function () {
+  this.classList.add("blink");
 });
 
 function maybeEnableButtons() {
