@@ -406,10 +406,11 @@ async function googleIn() {
   //  const fileUrl =
   //    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
   //fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
+  
   if (fileID !== undefined){
     console.log(fileId);}
     else {
-  let fileID = document.getElementById("pfileID").innerText;}
+  fileID = document.getElementById("pfileID").innerText;}
   
   const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
   const fetchOptions = {
