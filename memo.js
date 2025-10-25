@@ -449,34 +449,24 @@ async function googleIn() {
 // and the gapi client library is loaded.
 
 async function overwriteFile() {
-  // 1. Get all localStorage data
-  const localStorageData = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    localStorageData[key] = localStorage.getItem(key);
+  const newContent = 'This is the new content of the file.';
+const fileBlob = new Blob([newContent], { type: 'text/plain' });
+
+gapi.client.drive.files.update({
+  fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN', // The ID of the file to update
+  uploadType: 'media', // Essential for content updates
+  media: {
+    mimeType: 'text/plain', // The MIME type of the new content
+    body: fileBlob // The new content as a Blob or File object
+  },
+  // Optional: Update metadata along with content
+  resource: {
+    name: 'Updated Text File.txt'
   }
-
-  // 2. Convert to a JSON string
-  const jsonString = JSON.stringify(localStorageData, null, 4);
-
-  // 3. Create a Blob and URL
-  const newContentBlob = new Blob([jsonString], { type: "application/json" });
-  console.log(newContentBlob);
-  await gapi.client.drive.files.update({
-      fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
-      uploadType: 'media', // Essential for content updates
-        media: {
-          mimeType: 'application/json', // The MIME type of the new content
-          body: newContentBlob // The new content as a Blob or File object
-        },
-        // Optional: Update metadata along with content
-        resource: {
-          name: 'aa.json'
-        }
-      }).then(function(response) {
-        console.log('File content and metadata updated:', response.result);
-      }, function(error) {
-        console.error('Error updating file content:', error);
-      });
+}).then(function(response) {
+  console.log('File content and metadata updated:', response.result);
+}, function(error) {
+  console.error('Error updating file content:', error);
+});
 
 }
