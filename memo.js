@@ -465,11 +465,11 @@ async function overwriteFile() {
     const response = await gapi.client.drive.files.update({
       fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
       resource: {
-        name: 'update.json', // Optional: Update the file name
-        mimeType: newContentBlob.type // Optional: Update the MIME type
+        //name: 'update.json', // Optional: Update the file name
+        mimeType: "application/json"  // Optional: Update the MIME type
       },
       media: {
-        mimeType: newContentBlob.type,
+        //mimeType: newContentBlob.type,
         body: newContentBlob // The new content of the file as a Blob or File object
       }
     });
