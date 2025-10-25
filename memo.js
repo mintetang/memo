@@ -445,7 +445,6 @@ async function googleIn() {
 // and the gapi client library is loaded.
 
 async function overwriteFile() {
-  fileId = document.getElementById("pfileId").innerText;
   const allData = {};
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -455,7 +454,7 @@ async function overwriteFile() {
   const newContentBlob = new Blob([fileContent], { type: "application/json" });
   try {
     const response = await gapi.client.drive.files.update({
-      fileId: fileId,
+      fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
       resource: {
         //name: newFileName, // Optional: Update the file name
         mimeType: newContentBlob.type // Optional: Update the MIME type
