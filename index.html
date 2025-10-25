@@ -21,16 +21,13 @@
         </button>
         <button id="showMemo" onclick="showMemo()">Show Memo</button>
         <div id="googleOutDiv">
-          <label>
-            上傳Google: 請"登入認證" <br />
-            之後==>“上傳Google”
+          <label id="googleNote">
+            讀回或儲存Google: 請先<span>"登入認證"</span><br>
+            之後==>“讀回Google”或“儲存Google”
           </label>
           <button id="authorize_button">登入認證</button>
-          <button id="upload_button" disabled>上傳Google</button>
-        </div>
-        <div id="googleInDiv">
-          <label> 讀回Google檔案 </label>
-          <button id="googleIn" onclick="googleIn()">讀回Google檔案</button>
+          <button id="googleIn" onclick="googleIn()">讀回Google</button>
+          <button id="upload_button" disabled>儲存Google</button>
         </div>
         <label for="inputA"
           >keyA: can select the "fastbuttons" on the list

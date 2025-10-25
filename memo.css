@@ -41,6 +41,15 @@ label[for="kword" ]
     color:rgb(52, 42, 165);
     display:inline-block;
 }
+
+label#googleNote {
+    font-weight: bold;
+}
+label#googleNote span {
+    background-color: gold;
+    font-size: 1.5em;
+}
+
 select {
     padding: 8px;
     margin: 5px 10px;
@@ -97,17 +106,19 @@ button#upload_button {
     display:inline-flexbox;
 }
 
-#googleOutDiv, #googleInDiv {
+button#googleIn {
+    background-color: #1a8b85;
+    border:solid;
+    display:inline-flexbox;
+}
+
+#googleOutDiv {
     border:solid;
     background-color:#f4f4f4
     display:inline-flexbox;
     float:right;
 }
-#googleInDiv {
-    margin-right: 2em;
-    border:solid;
-    display:inline-flexbox;
-}
+
 button.dimmed {
   background-color: darkgray; /* Dimmed background color */
   color: #ccc; /* Lighter text color for dimmed state */
