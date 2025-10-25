@@ -462,30 +462,21 @@ async function overwriteFile() {
   // 3. Create a Blob and URL
   const newContentBlob = new Blob([jsonString], { type: "application/json" });
   console.log(newContentBlob);
-  try {
-    const response = await gapi.client.drive.files.update({
+  await gapi.client.drive.files.update({
       fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
-      resource: {
-        name: 'update.json', // Optional: Update the file name
-        //mimeType: "application/json"  // Optional: Update the MIME type
-      },
-      media: {
-        //mimeType: newContentBlob.type,
-        body: newContentBlob // The new content of the file as a Blob or File object
-      }
-    });
+      uploadType: 'media', // Essential for content updates
+        media: {
+          mimeType: 'application/json', // The MIME type of the new content
+          body: newContentBlob // The new content as a Blob or File object
+        },
+        // Optional: Update metadata along with content
+        resource: {
+          name: 'aa.json'
+        }
+      }).then(function(response) {
+        console.log('File content and metadata updated:', response.result);
+      }, function(error) {
+        console.error('Error updating file content:', error);
+      });
 
-    console.log('File updated:', response.result);
-    return response.result;
-  } catch (error) {
-    console.error('Error updating file:', error);
-    throw error;
-  }
 }
-
-// Example usage:
- //const existingFileId = document.getElementById("pfileId").innerText;
- //const newContent = new Blob(['This is the new content.'], { type: 'text/plain' });
-// const updatedFileName = 'my_updated_file.txt';
-
-// overwriteFile(existingFileId, newContent, updatedFileName);
