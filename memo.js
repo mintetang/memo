@@ -478,5 +478,4 @@ async function overwriteFile() {
       }, function(error) {
         console.error('Error updating file content:', error);
       });
-
 }
