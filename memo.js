@@ -414,7 +414,7 @@ function showMemo() {
             console.log('File Content:', fileContent);
             localStorage.clear(); // Clear existing localStorage before restoring
             for (const key in fileContent) {
-                localStorage.setItem(key, data[key]);
+                localStorage.setItem(key, fileContent[key]);
             }
             console.log('localStorage restored successfully!');
             alert('成功讀回紀錄!');
