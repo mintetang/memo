@@ -352,7 +352,7 @@ function handleAuthClick() {
 //declaire fileId to set in upload and use in googleIn
 
 function setFileID() {
-  If (fileId === undefined) 
+  if (fileId === undefined) 
     globalThis.fileId = "";
   }
 setFileID();
