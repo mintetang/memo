@@ -440,3 +440,43 @@ async function googleIn() {
     return null;
   }
 }
+
+// Assuming you have authenticated and obtained an access token
+// and the gapi client library is loaded.
+
+async function overwriteFile() {
+  fileId = document.getElementById("pfileId").innerText;
+  const allData = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    allData[key] = localStorage.getItem(key);
+  }
+  const fileContent = JSON.stringify(allData, null, 2);
+  const newContentBlob = new Blob([fileContent], { type: "application/json" });
+  try {
+    const response = await gapi.client.drive.files.update({
+      fileId: fileId,
+      resource: {
+        //name: newFileName, // Optional: Update the file name
+        mimeType: newContentBlob.type // Optional: Update the MIME type
+      },
+      media: {
+        mimeType: newContentBlob.type,
+        body: newContentBlob // The new content of the file as a Blob or File object
+      }
+    });
+
+    console.log('File updated:', response.result);
+    return response.result;
+  } catch (error) {
+    console.error('Error updating file:', error);
+    throw error;
+  }
+}
+
+// Example usage:
+ //const existingFileId = document.getElementById("pfileId").innerText;
+ //const newContent = new Blob(['This is the new content.'], { type: 'text/plain' });
+// const updatedFileName = 'my_updated_file.txt';
+
+// overwriteFile(existingFileId, newContent, updatedFileName);

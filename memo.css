@@ -100,6 +100,12 @@ button#exlocal {
 
 }
 
+button#update_button {
+    background-color: #1a8b85;
+    border:solid;
+    display:inline-flexbox;
+}
+
 button#upload_button {
     background-color: #1a8b85;
     border:solid;
