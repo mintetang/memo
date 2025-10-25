@@ -384,7 +384,7 @@ async function uploadToDrive() {
   );
 
   const json = await res.json();
-  document.getElementById("pfileID").innerText = json.id;
+  document.getElementById("pfileId").innerText = json.id;
   alert("✅ 已完成上傳: File ID: " + json.id);
   return;
 }
@@ -410,7 +410,7 @@ async function googleIn() {
   if (typeof(fileId) !== undefined){
     console.log(fileId);}
     else {
-  fileID = document.getElementById("pfileID").innerText;}
+  fileId = document.getElementById("pfileId").innerText;}
   
   const fetchUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
   const fetchOptions = {
