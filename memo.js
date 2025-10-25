@@ -350,8 +350,9 @@ function handleAuthClick() {
 }
 
 //declaire fileId to set in upload and use in googleIn
-
+if (fieldId === undefined){
 let fileId;
+}
 
 async function uploadToDrive() {
   // Example: get all localStorage data
