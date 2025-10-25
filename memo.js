@@ -449,43 +449,24 @@ async function googleIn() {
 // and the gapi client library is loaded.
 
 async function overwriteFile() {
-  // 1. Get all localStorage data
-  const localStorageData = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    localStorageData[key] = localStorage.getItem(key);
+  const newContent = 'This is the new content of the file.';
+const fileBlob = new Blob([newContent], { type: 'text/plain' });
+
+gapi.client.drive.files.update({
+  fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN', // The ID of the file to update
+  uploadType: 'media', // Essential for content updates
+  media: {
+    mimeType: 'text/plain', // The MIME type of the new content
+    body: fileBlob // The new content as a Blob or File object
+  },
+  // Optional: Update metadata along with content
+  resource: {
+    name: 'Updated Text File.txt'
   }
+}).then(function(response) {
+  console.log('File content and metadata updated:', response.result);
+}, function(error) {
+  console.error('Error updating file content:', error);
+});
 
-  // 2. Convert to a JSON string
-  const jsonString = JSON.stringify(localStorageData, null, 4);
-
-  // 3. Create a Blob and URL
-  const newContentBlob = new Blob([jsonString], { type: "application/json" });
-  console.log(newContentBlob);
-  try {
-    const response = await gapi.client.drive.files.update({
-      fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
-      resource: {
-        name: 'update.json', // Optional: Update the file name
-        //mimeType: "application/json"  // Optional: Update the MIME type
-      },
-      media: {
-        //mimeType: newContentBlob.type,
-        body: newContentBlob // The new content of the file as a Blob or File object
-      }
-    });
-
-    console.log('File updated:', response.result);
-    return response.result;
-  } catch (error) {
-    console.error('Error updating file:', error);
-    throw error;
-  }
 }
-
-// Example usage:
- //const existingFileId = document.getElementById("pfileId").innerText;
- //const newContent = new Blob(['This is the new content.'], { type: 'text/plain' });
-// const updatedFileName = 'my_updated_file.txt';
-
-// overwriteFile(existingFileId, newContent, updatedFileName);
