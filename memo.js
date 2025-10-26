@@ -468,7 +468,7 @@ async function overwriteFile() {
         method: 'PATCH',
         headers: new Headers({
             Authorization: `Bearer ${accessToken}`,
-            'Content-type': mimeType
+            'Content-type': "application/json"
         }),
         body: jsonString
         })
