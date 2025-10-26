@@ -408,9 +408,7 @@ async function googleIn() {
   accessToken = gapi.client.getToken().access_token;
   console.log(accessToken);
   //  const fileUrl =
-  //    "https://drive.google.com/file/d/1AmekSB_8aADD7HOxUeptsb3moZ6I75V2";
-  //fileId = "1AT-8tDkBQRvP0UGlMsebDbHZcROF-d1b";
-  
+
   if (typeof fileId !== "undefined"){
     console.log(fileId);}
     else {
@@ -449,6 +447,8 @@ async function googleIn() {
 // and the gapi client library is loaded.
 
 async function overwriteFile() {
+  accessToken = gapi.client.getToken().access_token;
+  console.log(accessToken);
   // 1. Get all localStorage data
   const localStorageData = {};
   for (let i = 0; i < localStorage.length; i++) {
@@ -467,7 +467,7 @@ async function overwriteFile() {
     fetch(url, {
         method: 'PATCH',
         headers: new Headers({
-            Authorization: 'Bearer ' + oauthToken,
+            Authorization: `Bearer ${accessToken}`,
             'Content-type': mimeType
         }),
         body: jsonString
