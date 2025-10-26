@@ -301,7 +301,7 @@ let gapiInited = false;
 let gisInited = false;
 
 document.getElementById("authorize_button").onclick = handleAuthClick;
-document.getElementById("upload_button").onclick = uploadToDrive;
+//document.getElementById("upload_button").onclick = uploadToDrive;
 
 // Load GAPI client
 gapi.load("client", async () => {
@@ -327,7 +327,7 @@ document
   .addEventListener("click", function () {
     this.classList.add("dimmed");
   });
-document.getElementById("upload_button").addEventListener("click", function () {
+//document.getElementById("upload_button").addEventListener("click", function () {
   this.classList.add("blink");
 });
 
