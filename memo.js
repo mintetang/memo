@@ -327,9 +327,9 @@ document
   .addEventListener("click", function () {
     this.classList.add("dimmed");
   });
-//document.getElementById("upload_button").addEventListener("click", function () {
+/*document.getElementById("upload_button").addEventListener("click", function () {
   this.classList.add("blink");
-});
+});*/
 
 document.getElementById("googleIn").addEventListener("click", function () {
   this.classList.add("blink");
