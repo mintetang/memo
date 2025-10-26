@@ -462,20 +462,19 @@ async function overwriteFile() {
   // 3. Create a Blob and URL
   const newContentBlob = new Blob([jsonString], { type: "application/json" });
   console.log(newContentBlob);
-  await gapi.client.drive.files.update({
-      fileId: '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN',
-      uploadType: 'media', // Essential for content updates
-        media: {
-          mimeType: 'application/json', // The MIME type of the new content
-          body: newContentBlob // The new content as a Blob or File object
-        },
-        // Optional: Update metadata along with content
-        resource: {
-          name: 'aa.json'
-        }
-      }).then(function(response) {
-        console.log('File content and metadata updated:', response.result);
-      }, function(error) {
-        console.error('Error updating file content:', error);
-      });
-}
+  fileId = '1PfD1zE85ScEnntWujXk_3tKgFhcFCHwN';
+   const url = 'https://www.googleapis.com/upload/drive/v3/files/' + fileId + '?uploadType=media';
+    fetch(url, {
+        method: 'PATCH',
+        headers: new Headers({
+            Authorization: 'Bearer ' + oauthToken,
+            'Content-type': mimeType
+        }),
+        body: jsonString
+        })
+        .then(result => result.json())
+        .then(value => {
+            console.log('Updated. Result:\n' + JSON.stringify(value, null, 2));
+        })
+        .catch(err => console.error(err))
+      }
