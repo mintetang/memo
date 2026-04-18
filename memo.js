@@ -263,40 +263,11 @@ function clearInput() {
   document.getElementById("inputC").value = null;
 }
 
-function toInputHome() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="home"]').innerText;
-}
+function toInput(btn) {
+  const input = document.querySelector("#inputA");
 
-function toInputRecent() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="recent"]').innerText;
-}
-
-function toInputBusiness() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="business"]').innerText;
-}
-
-function toInputChurch() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="church"]').innerText;
-}
-
-function toInputTravel() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="travel"]').innerText;
-}
-
-function toInputWord() {
-  document.getElementById("inputA").value = null;
-  document.getElementById("inputA").value =
-    document.querySelector('[value="word"]').innerText;
+  // Use button text OR value (choose what you prefer)
+  input.value = btn.innerText.trim();
 }
 
 function generateObjectReport(data) {

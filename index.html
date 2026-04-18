@@ -36,24 +36,11 @@
           >keyA: can select the "fastbuttons" on the list
         </label>
         <input type="text" id="inputA" required size="10" />
-        <button class="fastword" onclick="toInputHome()" value="home">
-          Home
-        </button>
-        <button class="fastword" onclick="toInputRecent()" value="recent">
-          Recent
-        </button>
-        <button class="fastword" onclick="toInputBusiness()" value="business">
-          Business
-        </button>
-        <button class="fastword" onclick="toInputTravel()" value="travel">
-          Travel
-        </button>
-        <button class="fastword" onclick="toInputChurch()" value="church">
-          Church
-        </button>
-        <button class="fastword" onclick="toInputWord()" value="word">
-          Word
-        </button>
+
+        <button class="fastword" onclick="toInput(this)">Recent</button>
+        <button class="fastword" onclick="toInput(this)">Work</button>
+        <button class="fastword" onclick="toInput(this)">Home</button>
+
         <label for="inputB">keyB: </label>
         <input type="text" id="inputB" required size="20" />
         <label for="inputC">keyC: </label>
@@ -65,11 +52,9 @@
         <select id="aSelector" required onchange="showMemo()">
           <option value="all">all</option>
           <option value="Recent">Recent</option>
-          <option value="Home">Home</option>
-          <option value="Travel">Travel</option>
-          <option value="Church">Church</option>
+          <option value="Work">Work</option>
           <option value="Business">Business</option>
-          <option value="Word">Word</option>
+          <option value="Home">Home</option>
         </select>
 
         <div id="readPopup" class="popup">
