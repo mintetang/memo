@@ -86,12 +86,21 @@
           <button onclick="closePopup()">取消</button>
         </div>
 
-        <input
+        <!--<input
           type="text"
           id="searchTermInput"
           placeholder="Enter search term"
         />
-        <button onclick="searchAndHighlight()">Search</button>
+        <button onclick="searchAndHighlight()">Search</button>-->
+        
+        <form id="searchForm">
+          <input
+            type="text"
+            id="searchTermInput"
+            placeholder="Enter search term"
+          />
+          <button type="submit">Search</button>
+        </form>
       </div>
 
       <div id="resultSection">
