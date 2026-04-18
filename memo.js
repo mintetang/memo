@@ -161,27 +161,99 @@ function cleanCurrent() {
     }
 }*/
 
-function searchAndHighlight() {
-  const searchTerm = document.getElementById("searchTermInput").value;
-  const contentDiv = document.getElementById("resultSection");
+document
+  .getElementById("searchForm")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    searchAndHighlight();
+  });
 
-  // Remove previous highlights
-  contentDiv.innerHTML = contentDiv.innerHTML.replace(
-    /<mark class="highlight">(.*?)<\/mark>/gi,
-    "$1"
-  );
+function clearHighlights(container) {
+  const marks = container.querySelectorAll("mark.highlight");
 
-  if (searchTerm) {
-    const regex = new RegExp(searchTerm, "gi");
-    contentDiv.innerHTML = contentDiv.innerHTML.replace(
-      regex,
-      `<mark class="highlight">${searchTerm}</mark>`
+  marks.forEach((mark) => {
+    const parent = mark.parentNode;
+    parent.replaceChild(document.createTextNode(mark.textContent), mark);
+    parent.normalize(); // merge adjacent text nodes
+  });
+}
+
+function highlightTextNode(node, searchTerm) {
+  const text = node.nodeValue;
+  const lowerText = text.toLowerCase();
+  const lowerSearch = searchTerm.toLowerCase();
+
+  let index = lowerText.indexOf(lowerSearch);
+  if (index === -1) return;
+
+  const fragment = document.createDocumentFragment();
+
+  let lastIndex = 0;
+  while (index !== -1) {
+    // text before match
+    fragment.appendChild(
+      document.createTextNode(text.slice(lastIndex, index))
     );
 
-    const firstHighlight = document.querySelector(".highlight");
-    if (firstHighlight) {
-      firstHighlight.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    // highlighted match
+    const mark = document.createElement("mark");
+    mark.className = "highlight";
+    mark.textContent = text.slice(index, index + searchTerm.length);
+    fragment.appendChild(mark);
+
+    lastIndex = index + searchTerm.length;
+    index = lowerText.indexOf(lowerSearch, lastIndex);
+  }
+
+  // remaining text
+  fragment.appendChild(
+    document.createTextNode(text.slice(lastIndex))
+  );
+
+  node.parentNode.replaceChild(fragment, node);
+}
+
+function walkAndHighlight(node, searchTerm) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    highlightTextNode(node, searchTerm);
+    return;
+  }
+
+  // Skip script/style tags
+  if (
+    node.nodeType === Node.ELEMENT_NODE &&
+    ["SCRIPT", "STYLE"].includes(node.tagName)
+  ) {
+    return;
+  }
+
+  node.childNodes.forEach((child) =>
+    walkAndHighlight(child, searchTerm)
+  );
+}
+
+function searchAndHighlight() {
+  const searchTerm = document
+    .getElementById("searchTermInput")
+    .value.trim();
+
+  const contentDiv = document.getElementById("resultSection");
+
+  // Clear previous highlights safely
+  clearHighlights(contentDiv);
+
+  if (!searchTerm) return;
+
+  // Highlight safely
+  walkAndHighlight(contentDiv, searchTerm);
+
+  // Scroll to first result
+  const firstHighlight = contentDiv.querySelector("mark.highlight");
+  if (firstHighlight) {
+    firstHighlight.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
   }
 }
 
